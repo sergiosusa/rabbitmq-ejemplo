@@ -1,0 +1,6 @@
+services:
+    hello_world_service:
+        class: SS\AppBundle\RabbitMQ\HelloWorldConsumer
+
+    hello_world_dead_letter_service:
+        class:  SS\AppBundle\RabbitMQ\HelloWorldDeadLetterConsumer

@@ -1,0 +1,3 @@
+ss_app_homepage:
+    path:     /response/{name}
+    defaults: { _controller: SSAppBundle:Default:index }

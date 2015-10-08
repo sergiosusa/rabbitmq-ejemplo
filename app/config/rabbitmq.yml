@@ -1,0 +1,29 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host: 'localhost'
+            port: '5672'
+            user: 'guest'
+            password: 'guest'
+            vhost: '/'
+            lazy: true
+    producers:
+        hello_world:
+            connection: default
+            exchange_options: {name: 'hello', type: fanout, passive: false, durable: true, auto_delete: false}
+    consumers:
+        hello_world:
+            connection: default
+            exchange_options: {name: 'hello', type: fanout, passive: false, durable: true, auto_delete: false}
+            queue_options:
+                name: 'ha_hello_world'
+                arguments: { x-dead-letter-exchange: ['S', 'dead_letter'], 'x-message-ttl': ['I', 200]  }
+            callback:  hello_world_service
+            idle_timeout:     300
+        dead_letter:
+            connection: default
+            exchange_options: {name: 'dead_letter', type: fanout, passive: false, durable: true, auto_delete: false}
+            queue_options:    {name: 'ha_dead_letter'}
+            callback:         hello_world_dead_letter_service
+            idle_timeout:    300
+
