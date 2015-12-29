@@ -8,10 +8,16 @@ old_sound_rabbit_mq:
             vhost: '/'
             lazy: true
     producers:
+        # EXAMPLE 1
         hello_world:
             connection: default
             exchange_options: {name: 'hello', type: fanout, passive: false, durable: true, auto_delete: false}
+        # EXAMPLE 2
+        hello_world_2:
+            connection: default
+            exchange_options: {name: 'hello2', type: fanout, passive: false, durable: true, auto_delete: false}
     consumers:
+        # EXAMPLE 1
         hello_world:
             connection: default
             exchange_options: {name: 'hello', type: fanout, passive: false, durable: true, auto_delete: false}
@@ -25,5 +31,20 @@ old_sound_rabbit_mq:
             exchange_options: {name: 'dead_letter', type: fanout, passive: false, durable: true, auto_delete: false}
             queue_options:    {name: 'ha_dead_letter'}
             callback:         hello_world_dead_letter_service
+            idle_timeout:    300
+        # EXAMPLE 2
+        hello_world_2:
+            connection: default
+            exchange_options: {name: 'hello2', type: fanout, passive: false, durable: true, auto_delete: false}
+            queue_options:
+                name: 'ha_hello_world_2'
+                arguments: { x-dead-letter-exchange: ['S', 'dead_letter_requeue'] }
+            callback:  hello_world_2_service
+            idle_timeout:     300
+        dead_letter_requeue:
+            connection: default
+            exchange_options: {name: 'dead_letter_requeue', type: fanout, passive: false, durable: true, auto_delete: false}
+            queue_options:    {name: 'ha_dead_letter_requeue'}
+            callback:         hello_world_dead_letter_requeue_service
             idle_timeout:    300
 

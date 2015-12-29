@@ -1,6 +1,14 @@
 services:
+    # EXAMPLE 1
     hello_world_service:
         class: SS\AppBundle\RabbitMQ\HelloWorldConsumer
-
     hello_world_dead_letter_service:
         class:  SS\AppBundle\RabbitMQ\HelloWorldDeadLetterConsumer
+
+    # EXAMPLE 2
+    hello_world_2_service:
+        class: SS\AppBundle\RabbitMQ\HelloWorld2Consumer
+    hello_world_dead_letter_requeue_service:
+        class:  SS\AppBundle\RabbitMQ\HelloWorldDeadLetterRequeueConsumer
+        arguments:
+                    - @old_sound_rabbit_mq.hello_world_2_producer

@@ -20,4 +20,20 @@ class DefaultController extends Controller
 
         return $this->render('SSAppBundle:Default:index.html.twig', array('name' => $name));
     }
+
+    public function requeueAction($name) {
+
+        $this->get('old_sound_rabbit_mq.hello_world_2_producer')
+            ->publish(
+                json_encode(
+                    array(
+                        "response" => $name
+                    )
+                )
+            );
+
+        return $this->render('SSAppBundle:Default:index.html.twig', array('name' => $name));
+
+    }
+
 }

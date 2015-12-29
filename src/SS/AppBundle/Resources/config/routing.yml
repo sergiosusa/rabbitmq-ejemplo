@@ -1,3 +1,8 @@
+# EXAMPLE 1
 ss_app_homepage:
     path:     /response/{name}
     defaults: { _controller: SSAppBundle:Default:index }
+# EXAMPLE 2
+ss_app_requeue:
+    path:     /requeue/{name}
+    defaults: { _controller: SSAppBundle:Default:requeue }
