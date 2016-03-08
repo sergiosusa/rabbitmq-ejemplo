@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergiosusa
- * Date: 7/10/15
- * Time: 17:15
- */
 
-namespace SS\AppBundle\RabbitMQ;
+namespace AppBundle\Consumer\Example2;
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class HelloWorldDeadLetterRequeueConsumer implements ConsumerInterface
+class Example2DeadLetterRequeueConsumer implements ConsumerInterface
 {
 
     const MAX_ATTEMPTS = 5;

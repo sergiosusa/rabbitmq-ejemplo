@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergiosusa
- * Date: 7/10/15
- * Time: 17:15
- */
 
-namespace SS\AppBundle\RabbitMQ;
-
+namespace AppBundle\Consumer\Example1;
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class HelloWorldDeadLetterConsumer implements ConsumerInterface
+class Example1DeadLetterConsumer implements ConsumerInterface
 {
 
     public function execute(AMQPMessage $msg) {

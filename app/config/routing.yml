@@ -1,3 +1,1 @@
-ss_app:
-    resource: "@SSAppBundle/Resources/config/routing.yml"
-    prefix:   /
+

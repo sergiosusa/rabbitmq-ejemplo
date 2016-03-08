@@ -1,0 +1,14 @@
+services:
+    # EXAMPLE 1
+    example1_service:
+        class: AppBundle\Consumer\Example1\Example1Consumer
+    example1_dead_letter_service:
+        class:  AppBundle\Consumer\Example1\Example1DeadLetterConsumer
+
+    # EXAMPLE 2
+    example2_service:
+        class: AppBundle\Consumer\Example2\Example2Consumer
+    example2_dead_letter_requeue_service:
+        class:  AppBundle\Consumer\Example2\Example2DeadLetterRequeueConsumer
+        arguments:
+                    - @old_sound_rabbit_mq.example2_producer

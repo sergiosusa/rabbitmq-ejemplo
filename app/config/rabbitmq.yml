@@ -9,42 +9,42 @@ old_sound_rabbit_mq:
             lazy: true
     producers:
         # EXAMPLE 1
-        hello_world:
+        example1:
             connection: default
-            exchange_options: {name: 'hello', type: fanout, passive: false, durable: true, auto_delete: false}
+            exchange_options: {name: 'example1', type: fanout, passive: false, durable: true, auto_delete: false}
         # EXAMPLE 2
-        hello_world_2:
+        example2:
             connection: default
-            exchange_options: {name: 'hello2', type: fanout, passive: false, durable: true, auto_delete: false}
+            exchange_options: {name: 'example2', type: fanout, passive: false, durable: true, auto_delete: false}
     consumers:
         # EXAMPLE 1
-        hello_world:
+        example1:
             connection: default
-            exchange_options: {name: 'hello', type: fanout, passive: false, durable: true, auto_delete: false}
+            exchange_options: {name: 'example1', type: fanout, passive: false, durable: true, auto_delete: false}
             queue_options:
-                name: 'ha_hello_world'
+                name: 'ha_example1'
                 arguments: { x-dead-letter-exchange: ['S', 'dead_letter'], 'x-message-ttl': ['I', 200]  }
-            callback:  hello_world_service
+            callback:  example1_service
             idle_timeout:     300
-        dead_letter:
+        example1_dead_letter:
             connection: default
             exchange_options: {name: 'dead_letter', type: fanout, passive: false, durable: true, auto_delete: false}
             queue_options:    {name: 'ha_dead_letter'}
-            callback:         hello_world_dead_letter_service
+            callback:         example1_dead_letter_service
             idle_timeout:    300
         # EXAMPLE 2
-        hello_world_2:
+        example2:
             connection: default
-            exchange_options: {name: 'hello2', type: fanout, passive: false, durable: true, auto_delete: false}
+            exchange_options: {name: 'example2', type: fanout, passive: false, durable: true, auto_delete: false}
             queue_options:
-                name: 'ha_hello_world_2'
+                name: 'ha_example2'
                 arguments: { x-dead-letter-exchange: ['S', 'dead_letter_requeue'] }
-            callback:  hello_world_2_service
+            callback:  example2_service
             idle_timeout:     300
-        dead_letter_requeue:
+        example2_dead_letter_requeue:
             connection: default
             exchange_options: {name: 'dead_letter_requeue', type: fanout, passive: false, durable: true, auto_delete: false}
             queue_options:    {name: 'ha_dead_letter_requeue'}
-            callback:         hello_world_dead_letter_requeue_service
+            callback:         example2_dead_letter_requeue_service
             idle_timeout:    300
 

@@ -1,37 +1,25 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: sergiosusa
- * Date: 5/10/15
- * Time: 15:18
- */
-
-namespace SS\AppBundle\RabbitMQ;
+namespace AppBundle\Consumer\Example1;
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class HelloWorld2Consumer implements ConsumerInterface
+class Example1Consumer implements ConsumerInterface
 {
-
     public function execute(AMQPMessage $msg)
     {
 
         $body = json_decode($msg->body, true);
 
-        if ($msg->has("application_headers")) {
-            $nativeData = $msg->get("application_headers")->getNativeData();
-        }
-
-        return $this->readMessage($body, isset($nativeData['attempts']) ? $nativeData['attempts'] : 0);
+        return $this->readMessage($body);
 
     }
 
-    public function readMessage(Array $body, $attemps = 0)
+    public function readMessage(Array $body)
     {
 
-        echo "Message: " . $body["response"] . " with " .$attemps . " attemps ". PHP_EOL;
+        echo "Message: " . $body["response"] . PHP_EOL;
 
         switch ($body["response"]) {
             case "ack";
