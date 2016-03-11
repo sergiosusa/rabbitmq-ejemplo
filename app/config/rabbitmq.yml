@@ -16,6 +16,10 @@ old_sound_rabbit_mq:
         example2:
             connection: default
             exchange_options: {name: 'example2', type: fanout, passive: false, durable: true, auto_delete: false}
+        # EXAMPLE 3
+        example3:
+            connection: default
+            exchange_options: {name: 'example3', type: fanout, passive: false, durable: true, auto_delete: false}
     consumers:
         # EXAMPLE 1
         example1:
@@ -47,4 +51,20 @@ old_sound_rabbit_mq:
             queue_options:    {name: 'ha_dead_letter_requeue'}
             callback:         example2_dead_letter_requeue_service
             idle_timeout:    300
+        # EXAMPLE 3
+        example3:
+            connection: default
+            exchange_options: {name: 'example3', type: fanout, passive: false, durable: true, auto_delete: false}
+            queue_options:
+                name: 'ha_example3'
+            callback:  example3_service
+            idle_timeout:     300
+        example3_low:
+            connection: default
+            exchange_options: {name: 'example3', type: fanout, passive: false, durable: true, auto_delete: false}
+            queue_options:
+                name: 'ha_example2'
+            callback:  example3_service_low
+            idle_timeout:     300
+
 

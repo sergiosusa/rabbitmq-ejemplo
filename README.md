@@ -9,12 +9,12 @@ Contiene los siguientes ejemplos:
 
 Simulación de envío (con todos los posibles resultados) y recepción de mensajes a un exchange con una cola y el uso de un dead letter en caso de rechazar el mensaje.
 
-*Producer:*  HelloWorldProducer   
-*Consumers:* HelloWorldConsumer y HelloWorldDeadLetterConsumer
+*Producer:*  Example1Producer
+*Consumers:* Example1Consumer y Example1DeadLetterConsumer
 
-Controlador: 
+Publishers:
 
-    http://127.0.0.1:8000/response/<respuesta>
+    app/console send:example1 <respuesta> <numero de mensajes>
     
 donde los posibles valores de respuesta son: 
 
@@ -22,19 +22,26 @@ donde los posibles valores de respuesta son:
 *   nack_requeue ( no aceptado reencolado )
 *   reject_requeue ( rechazado y reencolado )
 *   reject (rechazado )
- 
+
+Consumers:
+
+    app/console rabbitmq:consumer example1
+    app/console rabbitmq:consumer example1_dead_letter
+
 Para evitar que los estados que reencolan queden en un bucle infinito he puesto TTL a los mensajes en la cola para que expiren luego de unos segundos.
-    
+
+[Explicación detallada](http://sergiosusa.com/blog)
+
 **EJEMPLO 2**
 
 Reencolamiento de mensajes usando la cola del dead letter.
 
-*Producer:* HelloWorld2Producer    
-*Consumer:* HelloWorld2Consumer y HelloWorldDeadLetterRequeueConsumer
+*Producer:* Example2Producer
+*Consumer:* Example2Consumer y Example2DeadLetterRequeueConsumer
 
-Controlador: 
+Publishers:
 
-    http://127.0.0.1:8000/requeue/<respuesta>
+    app/console send:example1 <respuesta> <numero de mensajes>
 
 
 donde los posibles valores de respuesta son: 
@@ -44,24 +51,43 @@ donde los posibles valores de respuesta son:
 *   reject_requeue ( rechazado y reencolado )
 *   reject (rechazado )
 
+Consumers:
+
+    app/console rabbitmq:consumer example2
+    app/console rabbitmq:consumer example2_dead_letter
+
+[Explicación detallada](http://sergiosusa.com/blog)
+
+**EJEMPLO 3**
+
+Como manejar el uso de la llegada de mensajes usando QoS (Quality of Services).
+
+Publishers:
+
+    app/console send:example3 <respuesta> <numero de mensajes>
+
+Consumers:
+
+    app/console rabbitmq:consumer example3
+    app/console rabbitmq:consumer example3_low
+
+[Explicación detallada](http://sergiosusa.com/blog)
 
 **nota:** todos los ejemplos contienen además algunas configuraciones adicionales para ponerle un poco más de emoción a la práctica.
 
 Pre-requisitos
 --------------
-*   RabbitMQ
+*   PHP 5.4+
 *   Composer
+*   RabbitMQ
 
 Instalación y Ejecución
 -----------------------
 
 1.  Clona el repositorio en tu maquina. 
 2.  Ejecuta composer install.
-3.  Ejecutar el servidor local (app/console server:run) 
-4.  Ejecuta los consumers del ejemplo (para el ejemplo 1: app/console rabbitmq:consumer  "hello_world" y "dead_letter")   
-    
-En este punto ya solo necesitas empezar a enviar mensajes usando los controladres descritos en cada ejemplo y seguir su comportamiento en la consola.     
- 
+3.  Ejecuta los consumers del ejemplo.
+4.  Ejecuta los publishers de cada ejemplo y ver como se comportan los ejemplos. ( app/consola send:example1,  app/consola send:example2, ...,  app/consola send:exampleN )
 
 Paquetes contiene este proyecto
 -------------------------------
@@ -77,8 +103,3 @@ Documentación Recomendada
 
 [Sitio Oficial de RabbitMQ](https://www.rabbitmq.com/)  
 [Mi Blog](http://sergiosusa.com/blog)
-
-
-
-
-
